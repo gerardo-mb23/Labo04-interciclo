@@ -193,17 +193,31 @@ bool eliminarPorId(Nodo *&head, Nodo *&tail, int id)
     return false;
 }
 
-int contarPaquetes(Nodo* head) {
+int contarPaquetes(Nodo *head)
+{
     int cont = 0;
-    Nodo* aux = head;
+    Nodo *aux = head;
 
-    while (aux != NULL) {
+    while (aux != NULL)
+    {
         cont++;
         aux = aux->sig;
     }
     return cont;
 }
 
+// Funcion para liberar toda la memoria usada por la lista
+
+void liberarLista(Nodo *&head, Nodo *&tail)
+{
+    while (head != NULL)
+    {
+        Nodo *borrar = head;
+        head = head->sig;
+        delete borrar;
+    }
+    tail = NULL;
+}
 
 int main()
 {
