@@ -124,6 +124,23 @@ void mostrarAdelante(Nodo *head)
     cout << "NULL\n";
 }
 
+// Funcion para mostrar la lista desde el final hasta el inicio
+void mostrarAtras(Nodo* tail) {
+    if (tail == NULL) {
+        cout << "Lista vacía.\n";
+        return;
+    }
+
+    Nodo* aux = tail;
+    while (aux != NULL) {
+        cout << "[ID: " << aux->id
+             << ", Nombre: " << aux->nombre
+             << ", Peso: " << aux->peso << "] <-> ";
+        aux = aux->ant;
+    }
+    cout << "NULL\n";
+}
+
 int main()
 {
 
