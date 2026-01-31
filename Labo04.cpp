@@ -193,6 +193,18 @@ bool eliminarPorId(Nodo *&head, Nodo *&tail, int id)
     return false;
 }
 
+int contarPaquetes(Nodo* head) {
+    int cont = 0;
+    Nodo* aux = head;
+
+    while (aux != NULL) {
+        cont++;
+        aux = aux->sig;
+    }
+    return cont;
+}
+
+
 int main()
 {
 
