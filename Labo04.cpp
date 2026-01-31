@@ -69,6 +69,36 @@ void insertarInicio(Nodo *&head, Nodo *&tail,
     }
 }
 
+// Inserta un paquete al final de la lista 
+
+void insertarFinal(Nodo*& head, Nodo*& tail,
+                   int id, string nombre, float peso) {
+
+    // Validar ID único
+    if (buscarPorId(head, id)) {
+        cout << "ID repetido.\n";
+        return;
+    }
+
+    Nodo* nuevo = new Nodo();
+    nuevo->id = id;
+    nuevo->nombre = nombre;
+    nuevo->peso = peso;
+    nuevo->sig = NULL;
+    nuevo->ant = tail;
+
+    // Lista vacía
+    if (listaVacia(head)) {
+        head = nuevo;
+        tail = nuevo;
+    }
+    // Lista con elementos
+    else {
+        tail->sig = nuevo;
+        tail = nuevo;
+    }
+}
+
 int main()
 {
 
