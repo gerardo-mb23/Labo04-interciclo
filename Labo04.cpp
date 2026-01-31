@@ -69,18 +69,20 @@ void insertarInicio(Nodo *&head, Nodo *&tail,
     }
 }
 
-// Inserta un paquete al final de la lista 
+// Inserta un paquete al final de la lista
 
-void insertarFinal(Nodo*& head, Nodo*& tail,
-                   int id, string nombre, float peso) {
+void insertarFinal(Nodo *&head, Nodo *&tail,
+                   int id, string nombre, float peso)
+{
 
     // Validar ID único
-    if (buscarPorId(head, id)) {
+    if (buscarPorId(head, id))
+    {
         cout << "ID repetido.\n";
         return;
     }
 
-    Nodo* nuevo = new Nodo();
+    Nodo *nuevo = new Nodo();
     nuevo->id = id;
     nuevo->nombre = nombre;
     nuevo->peso = peso;
@@ -88,15 +90,38 @@ void insertarFinal(Nodo*& head, Nodo*& tail,
     nuevo->ant = tail;
 
     // Lista vacía
-    if (listaVacia(head)) {
+    if (listaVacia(head))
+    {
         head = nuevo;
         tail = nuevo;
     }
     // Lista con elementos
-    else {
+    else
+    {
         tail->sig = nuevo;
         tail = nuevo;
     }
+}
+
+// Funcion para mostrar la lista desde el inicio hasta el final
+
+void mostrarAdelante(Nodo *head)
+{
+    if (listaVacia(head))
+    {
+        cout << "La lista esta vacía.\n";
+        return;
+    }
+    // Puntero auxiliar
+    Nodo *aux = head;
+    while (aux != NULL)
+    {
+        cout << "[ID: " << aux->id
+             << ", Nombre: " << aux->nombre
+             << ", Peso: " << aux->peso << "] <-> ";
+        aux = aux->sig;
+    }
+    cout << "NULL\n";
 }
 
 int main()
