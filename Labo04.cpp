@@ -2,16 +2,26 @@
 
 using namespace std;
 
-struct Nodo {
+struct Nodo
+{
     int id;
     string nombre;
     float peso;
-    Nodo* sig;
-    Nodo* ant;
-
+    Nodo *sig;
+    Nodo *ant;
 };
 
-int main() {
+/*
+Funcion para verifica si la lista está vacía
+ Retorna true si no hay nodos
+*/
+bool listaVacia(Nodo *head)
+{
+    return head == NULL;
+}
+
+int main()
+{
 
     return 0;
 }
