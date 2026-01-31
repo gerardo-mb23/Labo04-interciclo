@@ -20,6 +20,20 @@ bool listaVacia(Nodo *head)
     return head == NULL;
 }
 
+/* Fuicion para buscar paquete por su id */
+
+bool buscarPorId(Nodo* head, int id) {
+    Nodo* aux = head;
+    while (aux != NULL) {
+        if (aux->id == id)
+            return true;
+        aux = aux->sig;
+    }
+    return false;
+    
+}
+
+
 int main()
 {
 
