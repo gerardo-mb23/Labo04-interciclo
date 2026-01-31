@@ -125,20 +125,72 @@ void mostrarAdelante(Nodo *head)
 }
 
 // Funcion para mostrar la lista desde el final hasta el inicio
-void mostrarAtras(Nodo* tail) {
-    if (tail == NULL) {
+void mostrarAtras(Nodo *tail)
+{
+    if (tail == NULL)
+    {
         cout << "Lista vacía.\n";
         return;
     }
 
-    Nodo* aux = tail;
-    while (aux != NULL) {
+    Nodo *aux = tail;
+    while (aux != NULL)
+    {
         cout << "[ID: " << aux->id
              << ", Nombre: " << aux->nombre
              << ", Peso: " << aux->peso << "] <-> ";
         aux = aux->ant;
     }
     cout << "NULL\n";
+}
+/*
+ Funcion para elimina un paquete por ID
+ Maneja todos los casos posibles: borrar head, borrar tail, borrar en medio, lista vacía, id inexistente.
+*/
+bool eliminarPorId(Nodo *&head, Nodo *&tail, int id)
+{
+
+    if (listaVacia(head))
+        return false;
+
+    Nodo *act = head;
+
+    while (act != NULL)
+    {
+        if (act->id == id)
+        {
+
+            // Caso: único nodo
+            if (act == head && act == tail)
+            {
+                head = NULL;
+                tail = NULL;
+            }
+            // Eliminar head
+            else if (act == head)
+            {
+                head = head->sig;
+                head->ant = NULL;
+            }
+            // Eliminar tail
+            else if (act == tail)
+            {
+                tail = tail->ant;
+                tail->sig = NULL;
+            }
+            // Eliminar nodo intermedio
+            else
+            {
+                act->ant->sig = act->sig;
+                act->sig->ant = act->ant;
+            }
+
+            delete act;
+            return true;
+        }
+        act = act->sig;
+    }
+    return false;
 }
 
 int main()
