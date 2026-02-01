@@ -219,8 +219,76 @@ void liberarLista(Nodo *&head, Nodo *&tail)
     tail = NULL;
 }
 
-int main()
-{
+int main() {
 
+    Nodo* head = NULL;
+    Nodo* tail = NULL;
+
+    int op, id;
+    string nombre;
+    float peso;
+
+    do {
+        cout << "\n--- SISTEMA DE PAQUETES (TERRY) ---\n";
+        cout << "1) Insertar paquete al final\n";
+        cout << "2) Insertar paquete al inicio\n";
+        cout << "3) Mostrar lista adelante\n";
+        cout << "4) Mostrar lista atras\n";
+        cout << "5) Buscar paquete por ID\n";
+        cout << "6) Eliminar paquete por ID\n";
+        cout << "7) Mostrar cantidad de paquetes\n";
+        cout << "0) Salir\n";
+        cout << "Opcion: ";
+        cin >> op;
+
+        switch (op) {
+            
+            case 1:
+                cout << "ID: "; cin >> id;
+                cout << "Nombre: "; cin >> nombre;
+                cout << "Peso: "; cin >> peso;
+                insertarFinal(head, tail, id, nombre, peso);
+                break;
+
+            case 2:
+                cout << "ID: "; cin >> id;
+                cout << "Nombre: "; cin >> nombre;
+                cout << "Peso: "; cin >> peso;
+                insertarInicio(head, tail, id, nombre, peso);
+                break;
+
+            case 3:
+                mostrarAdelante(head);
+                break;
+
+            case 4:
+                mostrarAtras(tail);
+                break;
+
+            case 5:
+                cout << "ID a buscar: "; cin >> id;
+                if (buscarPorId(head, id))
+                    cout << " Paquete encontrado.\n";
+                else
+                    cout << "No existe el paquete.\n";
+                break;
+
+            case 6:
+                cout << "ID a eliminar: "; cin >> id;
+                if (eliminarPorId(head, tail, id))
+                    cout << " Paquete eliminado.\n";
+                else
+                    cout << "No se encontro el paquete.\n";
+                break;
+
+            case 7:
+                cout << "Total de paquetes: "
+                     << contarPaquetes(head) << endl;
+                break;
+        }
+
+    } while (op != 0);
+
+    liberarLista(head, tail);
     return 0;
 }
