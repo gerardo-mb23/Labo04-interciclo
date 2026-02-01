@@ -219,16 +219,76 @@ void liberarLista(Nodo *&head, Nodo *&tail)
     tail = NULL;
 }
 
-int main() {
+// Inserta un paquete manteniendo la lista ordenada por ID
 
-    Nodo* head = NULL;
-    Nodo* tail = NULL;
+void insertarOrdenadoPorId(Nodo *&head, Nodo *&tail,
+                           int id, string nombre, float peso)
+{
+    // Validar ID único
+    if (buscarPorId(head, id))
+    {
+        cout << "El ID esta repetido.\n";
+        return;
+    }
+
+    Nodo *nuevo = new Nodo();
+    nuevo->id = id;
+    nuevo->nombre = nombre;
+    nuevo->peso = peso;
+    nuevo->sig = NULL;
+    nuevo->ant = NULL;
+
+    // Caso 1: lista vacía
+    if (listaVacia(head))
+    {
+        head = nuevo;
+        tail = nuevo;
+        return;
+    }
+
+    // Caso 2: insertar al inicio
+    if (id < head->id)
+    {
+        nuevo->sig = head;
+        head->ant = nuevo;
+        head = nuevo;
+        return;
+    }
+
+    // Caso 3: insertar al final
+    if (id > tail->id)
+    {
+        nuevo->ant = tail;
+        tail->sig = nuevo;
+        tail = nuevo;
+        return;
+    }
+
+    // Caso 4: insertar en medio
+    Nodo *aux = head;
+    while (aux->sig != NULL && aux->sig->id < id)
+    {
+        aux = aux->sig;
+    }
+
+    nuevo->sig = aux->sig;
+    nuevo->ant = aux;
+    aux->sig->ant = nuevo;
+    aux->sig = nuevo;
+}
+
+int main()
+{
+
+    Nodo *head = NULL;
+    Nodo *tail = NULL;
 
     int op, id;
     string nombre;
     float peso;
 
-    do {
+    do
+    {
         cout << "\n--- SISTEMA DE PAQUETES (TERRY) ---\n";
         cout << "1) Insertar paquete al final\n";
         cout << "2) Insertar paquete al inicio\n";
@@ -237,57 +297,91 @@ int main() {
         cout << "5) Buscar paquete por ID\n";
         cout << "6) Eliminar paquete por ID\n";
         cout << "7) Mostrar cantidad de paquetes\n";
-        cout << "0) Salir\n";
-        cout << "Opcion: ";
+        cout << "8) Insertar paquete ORDENADO por ID \n";
+        cout << "9) Salir\n";
+        cout << "Digite su opcion: ";
         cin >> op;
 
-        switch (op) {
-            
-            case 1:
-                cout << "ID: "; cin >> id;
-                cout << "Nombre: "; cin >> nombre;
-                cout << "Peso: "; cin >> peso;
-                insertarFinal(head, tail, id, nombre, peso);
-                break;
+        switch (op)
+        {
 
-            case 2:
-                cout << "ID: "; cin >> id;
-                cout << "Nombre: "; cin >> nombre;
-                cout << "Peso: "; cin >> peso;
-                insertarInicio(head, tail, id, nombre, peso);
-                break;
+        case 1:
+            cout << "ID: ";
+            cin >> id;
+            cout << "Nombre: ";
+            cin.ignore();
+            getline(cin, nombre);
 
-            case 3:
-                mostrarAdelante(head);
-                break;
+            cout << "Peso: ";
+            cin >> peso;
+            insertarFinal(head, tail, id, nombre, peso);
+            break;
 
-            case 4:
-                mostrarAtras(tail);
-                break;
+        case 2:
+            cout << "ID: ";
+            cin >> id;
+            cout << "Nombre: ";
+            cin.ignore();
+            getline(cin, nombre);
+            cout << "Peso: ";
+            cin >> peso;
+            insertarInicio(head, tail, id, nombre, peso);
+            break;
 
-            case 5:
-                cout << "ID a buscar: "; cin >> id;
-                if (buscarPorId(head, id))
-                    cout << " Paquete encontrado.\n";
-                else
-                    cout << "No existe el paquete.\n";
-                break;
+        case 3:
+            mostrarAdelante(head);
+            break;
 
-            case 6:
-                cout << "ID a eliminar: "; cin >> id;
-                if (eliminarPorId(head, tail, id))
-                    cout << " Paquete eliminado.\n";
-                else
-                    cout << "No se encontro el paquete.\n";
-                break;
+        case 4:
+            mostrarAtras(tail);
+            break;
 
-            case 7:
-                cout << "Total de paquetes: "
-                     << contarPaquetes(head) << endl;
-                break;
+        case 5:
+            cout << "ID a buscar: ";
+            cin >> id;
+            if (buscarPorId(head, id))
+                cout << " Paquete encontrado.\n";
+            else
+                cout << "No existe el paquete.\n";
+            break;
+
+        case 6:
+            cout << "ID a eliminar: ";
+            cin >> id;
+            if (eliminarPorId(head, tail, id))
+                cout << " Paquete eliminado.\n";
+            else
+                cout << "No se encontro el paquete.\n";
+            break;
+
+        case 7:
+            cout << "Total de paquetes: "
+                 << contarPaquetes(head) << endl;
+            break;
+
+        case 8:
+            cout << "ID: ";
+            cin >> id;
+            cout << "Nombre: ";
+            cin.ignore();
+            getline(cin, nombre);
+            cout << "Peso: ";
+            cin >> peso;
+            insertarOrdenadoPorId(head, tail, id, nombre, peso);
+
+            break;
+
+        case 9:
+
+            cout << "Saliendo..." << endl;
+            break;
+
+        default:
+
+            cout << "Opción invalida." << endl;
         }
 
-    } while (op != 0);
+    } while (op != 9);
 
     liberarLista(head, tail);
     return 0;
