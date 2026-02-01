@@ -218,6 +218,23 @@ void liberarLista(Nodo *&head, Nodo *&tail)
     }
     tail = NULL;
 }
+bool mostrarPaquetePorId(Nodo *head, int id)
+{
+    Nodo *aux = head;
+    while (aux != NULL)
+    {
+        if (aux->id == id)
+        {
+            cout << "\nPaquete encontrado:\n";
+            cout << "ID: " << aux->id << endl;
+            cout << "Nombre: " << aux->nombre << endl;
+            cout << "Peso: " << aux->peso << endl;
+            return true;
+        }
+        aux = aux->sig;
+    }
+    return false;
+}
 
 // Inserta un paquete manteniendo la lista ordenada por ID
 
@@ -337,11 +354,9 @@ int main()
             break;
 
         case 5:
-            cout << "ID a buscar: ";
+            cout << "Digite el ID a buscar: ";
             cin >> id;
-            if (buscarPorId(head, id))
-                cout << " Paquete encontrado.\n";
-            else
+            if (!mostrarPaquetePorId(head, id))
                 cout << "No existe el paquete.\n";
             break;
 
